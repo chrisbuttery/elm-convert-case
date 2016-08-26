@@ -47,7 +47,7 @@ function loadPlayer () {
   player.loadVideoById(videos[currentVideo])
   player.seekTo(videos[currentVideo].startSeconds)
   player.mute()
-  vidRescale()
+  videoRescale()
 }
 
 function onPlayerStateChange (e) {
@@ -57,7 +57,7 @@ function onPlayerStateChange (e) {
   } else {
     if (done) {
       display.classList.remove('active')
-      if (currentVideo === vid.length - 1) {
+      if (currentVideo === videos.length - 1) {
         currentVideo = 0
       } else {
         currentVideo++
@@ -68,7 +68,7 @@ function onPlayerStateChange (e) {
   }
 }
 
-function vidRescale () {
+function videoRescale () {
   if (!player) return
   var w = window.innerWidth
   var h = window.innerHeight
@@ -79,4 +79,4 @@ function vidRescale () {
   }
 }
 
-window.addEventListener('resize', vidRescale)
+window.addEventListener('resize', videoRescale)

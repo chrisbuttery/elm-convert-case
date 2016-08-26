@@ -43,7 +43,6 @@ function onYouTubeIframeAPIReady () {
 
 function loadPlayer () {
   if (!display) display = document.querySelector('.js-display')
-	console.log('currentVideo', currentVideo)
   player.loadVideoById(videos[currentVideo])
   player.seekTo(videos[currentVideo].startSeconds)
   player.mute()

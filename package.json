@@ -1,0 +1,23 @@
+{
+  "name": "elm-convert-case",
+  "version": "1.0.0",
+  "description": "Convert string case",
+  "main": "index.js",
+  "scripts": {
+    "build": "elm-make src/Main.elm --output build/elm.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisbuttery/convert-string-case.git"
+  },
+  "author": "Chris Buttery <info@chrisbuttery.com> (http://www.chrisbuttery.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisbuttery/convert-string-case/issues"
+  },
+  "homepage": "https://github.com/chrisbuttery/convert-string-case#readme",
+  "private": true,
+  "dependencies": {
+    "elm": "^0.17.1"
+  }
+}

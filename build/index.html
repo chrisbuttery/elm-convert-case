@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Elm Convert Case</title>
+    <link href="https://fonts.googleapis.com/css?family=Creepster|Geo" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="wrapper static">
+      <div id="player" class="screen js-display"></div>
+    </div>
+    <div class="js-elm"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+    <script type="text/javascript" src="video.js"></script>
+    <script type="text/javascript" src="clipboard.js"></script>
+    <script type="text/javascript" src="elm.js"></script>
+    <script type="text/javascript">
+      var target = document.querySelector('.js-elm');
+      Elm.Main.embed(target, null);
+    </script>
+  </body>
+</html>

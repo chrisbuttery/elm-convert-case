@@ -18,6 +18,6 @@ npm run build
 ```
 ### Todo
 
-* [] Character count
-* [] Word count
-* [] Style it properly
+* [ ] Character count
+* [ ] Word count
+* [ ] Style it properly

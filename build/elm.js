@@ -8289,7 +8289,8 @@ var _chrisbuttery$elm_convert_case$Main$renderTextarea = F4(
 				[]));
 	});
 var _chrisbuttery$elm_convert_case$Main$renderButton = F3(
-	function (i, num, msg) {
+	function (i, num, _p0) {
+		var _p1 = _p0;
 		return A2(
 			_elm_lang$html$Html$button,
 			_elm_lang$core$Native_List.fromArray(
@@ -8304,12 +8305,11 @@ var _chrisbuttery$elm_convert_case$Main$renderButton = F3(
 							_1: _elm_lang$core$Native_Utils.eq(i, num)
 						}
 						])),
-					_elm_lang$html$Html_Events$onClick(msg)
+					_elm_lang$html$Html_Events$onClick(_p1._1)
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html$text(
-					_elm_lang$core$Basics$toString(msg))
+					_elm_lang$html$Html$text(_p1._0)
 				]));
 	});
 var _chrisbuttery$elm_convert_case$Main$snakerize = function (str) {
@@ -8318,7 +8318,7 @@ var _chrisbuttery$elm_convert_case$Main$snakerize = function (str) {
 			_elm_lang$core$Regex$replace,
 			_elm_lang$core$Regex$All,
 			_elm_lang$core$Regex$regex('\\s'),
-			function (_p0) {
+			function (_p2) {
 				return '_';
 			},
 			str));
@@ -8329,7 +8329,7 @@ var _chrisbuttery$elm_convert_case$Main$dasherize = function (str) {
 			_elm_lang$core$Regex$replace,
 			_elm_lang$core$Regex$All,
 			_elm_lang$core$Regex$regex('\\s'),
-			function (_p1) {
+			function (_p3) {
 				return '-';
 			},
 			str));
@@ -8339,10 +8339,10 @@ var _chrisbuttery$elm_convert_case$Main$camelize = function (str) {
 		_elm_lang$core$Regex$replace,
 		_elm_lang$core$Regex$All,
 		_elm_lang$core$Regex$regex('\\s(\\w)'),
-		function (_p2) {
-			var _p3 = _p2;
+		function (_p4) {
+			var _p5 = _p4;
 			return _elm_lang$core$String$toUpper(
-				_elm_lang$core$String$trimLeft(_p3.match));
+				_elm_lang$core$String$trimLeft(_p5.match));
 		},
 		str);
 };
@@ -8351,9 +8351,9 @@ var _chrisbuttery$elm_convert_case$Main$sentencize = function (str) {
 		_elm_lang$core$Regex$replace,
 		_elm_lang$core$Regex$AtMost(1),
 		_elm_lang$core$Regex$regex('(\\w)'),
-		function (_p4) {
-			var _p5 = _p4;
-			return _elm_lang$core$String$toUpper(_p5.match);
+		function (_p6) {
+			var _p7 = _p6;
+			return _elm_lang$core$String$toUpper(_p7.match);
 		},
 		_elm_lang$core$String$toLower(str));
 };
@@ -8362,81 +8362,81 @@ var _chrisbuttery$elm_convert_case$Main$titlize = function (str) {
 		_elm_lang$core$Regex$replace,
 		_elm_lang$core$Regex$All,
 		_elm_lang$core$Regex$regex('\\s(\\w)'),
-		function (_p6) {
-			var _p7 = _p6;
-			return _elm_lang$core$String$toUpper(_p7.match);
+		function (_p8) {
+			var _p9 = _p8;
+			return _elm_lang$core$String$toUpper(_p9.match);
 		},
 		A4(
 			_elm_lang$core$Regex$replace,
 			_elm_lang$core$Regex$AtMost(1),
 			_elm_lang$core$Regex$regex('(\\w)'),
-			function (_p8) {
-				var _p9 = _p8;
-				return _elm_lang$core$String$toUpper(_p9.match);
+			function (_p10) {
+				var _p11 = _p10;
+				return _elm_lang$core$String$toUpper(_p11.match);
 			},
 			str));
 };
 var _chrisbuttery$elm_convert_case$Main$update = F2(
 	function (msg, model) {
-		var _p10 = msg;
-		switch (_p10.ctor) {
+		var _p12 = msg;
+		switch (_p12.ctor) {
 			case 'InputSnakeCase':
-				var _p11 = _p10._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							text: _p11,
-							conversion: _chrisbuttery$elm_convert_case$Main$snakerize(_p11)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'InputHyphenCase':
-				var _p12 = _p10._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							text: _p12,
-							conversion: _chrisbuttery$elm_convert_case$Main$dasherize(_p12)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'InputCamelCase':
-				var _p13 = _p10._0;
+				var _p13 = _p12._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							text: _p13,
-							conversion: _chrisbuttery$elm_convert_case$Main$camelize(_p13)
+							conversion: _chrisbuttery$elm_convert_case$Main$snakerize(_p13)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'InputTitleCase':
-				var _p14 = _p10._0;
+			case 'InputHyphenCase':
+				var _p14 = _p12._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							text: _p14,
-							conversion: _chrisbuttery$elm_convert_case$Main$titlize(_p14)
+							conversion: _chrisbuttery$elm_convert_case$Main$dasherize(_p14)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'InputSentenceCase':
-				var _p15 = _p10._0;
+			case 'InputCamelCase':
+				var _p15 = _p12._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							text: _p15,
-							conversion: _chrisbuttery$elm_convert_case$Main$sentencize(_p15)
+							conversion: _chrisbuttery$elm_convert_case$Main$camelize(_p15)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'InputTitleCase':
+				var _p16 = _p12._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							text: _p16,
+							conversion: _chrisbuttery$elm_convert_case$Main$titlize(_p16)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'InputSentenceCase':
+				var _p17 = _p12._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							text: _p17,
+							conversion: _chrisbuttery$elm_convert_case$Main$sentencize(_p17)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8515,7 +8515,13 @@ var _chrisbuttery$elm_convert_case$Main$CamelCase = {ctor: 'CamelCase'};
 var _chrisbuttery$elm_convert_case$Main$SnakeCase = {ctor: 'SnakeCase'};
 var _chrisbuttery$elm_convert_case$Main$HyphenCase = {ctor: 'HyphenCase'};
 var _chrisbuttery$elm_convert_case$Main$stringCases = _elm_lang$core$Native_List.fromArray(
-	[_chrisbuttery$elm_convert_case$Main$SnakeCase, _chrisbuttery$elm_convert_case$Main$HyphenCase, _chrisbuttery$elm_convert_case$Main$CamelCase, _chrisbuttery$elm_convert_case$Main$TitleCase, _chrisbuttery$elm_convert_case$Main$SentenceCase]);
+	[
+		{ctor: '_Tuple2', _0: 'Snake', _1: _chrisbuttery$elm_convert_case$Main$SnakeCase},
+		{ctor: '_Tuple2', _0: 'Hyphen', _1: _chrisbuttery$elm_convert_case$Main$HyphenCase},
+		{ctor: '_Tuple2', _0: 'Camel', _1: _chrisbuttery$elm_convert_case$Main$CamelCase},
+		{ctor: '_Tuple2', _0: 'Title', _1: _chrisbuttery$elm_convert_case$Main$TitleCase},
+		{ctor: '_Tuple2', _0: 'Sentence', _1: _chrisbuttery$elm_convert_case$Main$SentenceCase}
+	]);
 var _chrisbuttery$elm_convert_case$Main$InputSentenceCase = function (a) {
 	return {ctor: 'InputSentenceCase', _0: a};
 };
@@ -8642,7 +8648,7 @@ var _chrisbuttery$elm_convert_case$Main$main = {
 			init: _chrisbuttery$elm_convert_case$Main$init,
 			view: _chrisbuttery$elm_convert_case$Main$view,
 			update: _chrisbuttery$elm_convert_case$Main$update,
-			subscriptions: function (_p16) {
+			subscriptions: function (_p18) {
 				return _elm_lang$core$Platform_Sub$none;
 			}
 		}),

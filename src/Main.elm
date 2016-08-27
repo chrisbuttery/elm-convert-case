@@ -107,13 +107,13 @@ update msg model =
         | conversion = (sentencize model.text), num = 4 }, Cmd.none)
 
 
-stringCases : List Msg
+stringCases : List (String, Msg)
 stringCases = [
-  SnakeCase
-  , HyphenCase
-  , CamelCase
-  , TitleCase
-  , SentenceCase
+  ("Snake", SnakeCase)
+  , ("Hyphen", HyphenCase)
+  , ("Camel", CamelCase)
+  , ("Title", TitleCase)
+  , ("Sentence", SentenceCase)
   ]
 
 inputStringCases : List (String -> Msg)
@@ -125,9 +125,9 @@ inputStringCases = [
   , InputSentenceCase
   ]
 
-renderButton : Int -> Int -> Msg -> Html Msg
-renderButton i num msg =
-  button [ classList[("button", True), ("active", i == num)], onClick msg ] [ text (toString msg) ]
+renderButton : Int -> Int -> (String, Msg) -> Html Msg
+renderButton i num (str, msg) =
+  button [ classList[("button", True), ("active", i == num)], onClick msg ] [ text str ]
 
 
 renderTextarea : Int -> Int -> String -> (String -> a) -> Html a

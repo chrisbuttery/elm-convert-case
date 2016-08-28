@@ -11,39 +11,28 @@ import Array exposing (..)
 import String
 import Regex
 
+
 type alias Model =
   { text : String
   , conversion : String
-  , num : Int
+  , count : Int
   }
 
-type alias Functon =
-  String -> String
 
 model: Model
 model =
   { text = ""
   , conversion = ""
-  , num = 0
+  , count = 0
   }
 
-type Msg
-  = InputSnakeCase String
-  | InputHyphenCase String
-  | InputCamelCase String
-  | InputTitleCase String
-  | InputSentenceCase String
-  | HyphenCase
-  | SnakeCase
-  | CamelCase
-  | TitleCase
-  | SentenceCase
 
 titlize : String -> String
 titlize str =
   str
    |> Regex.replace (Regex.AtMost 1) (Regex.regex "(\\w)") (\{match} -> String.toUpper match)
    |> Regex.replace Regex.All (Regex.regex "\\s(\\w)") (\{match} -> String.toUpper match)
+
 
 sentencize : String -> String
 sentencize str =
@@ -57,11 +46,13 @@ camelize str =
   str
     |> Regex.replace Regex.All (Regex.regex "\\s(\\w)") (\{match} -> String.toUpper (String.trimLeft match))
 
-dasherize : String -> String
-dasherize str =
+
+hyphenize : String -> String
+hyphenize str =
   str
     |> Regex.replace Regex.All (Regex.regex "\\s") (\_ -> "-")
     |> String.toLower
+
 
 snakerize : String -> String
 snakerize str =
@@ -69,42 +60,72 @@ snakerize str =
     |> Regex.replace Regex.All (Regex.regex "\\s") (\_ -> "_")
     |> String.toLower
 
+
+type Msg
+  = InputSnakeCase String
+  | InputHyphenCase String
+  | InputCamelCase String
+  | InputTitleCase String
+  | InputSentenceCase String
+  | SnakeCase
+  | HyphenCase
+  | CamelCase
+  | TitleCase
+  | SentenceCase
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
     InputSnakeCase text ->
-      ({ model | text = text, conversion = (snakerize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (snakerize text) }, Cmd.none)
 
     InputHyphenCase text ->
-      ({ model | text = text, conversion = (dasherize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (hyphenize text) }, Cmd.none)
 
     InputCamelCase text ->
-      ({ model | text = text, conversion = (camelize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (camelize text) }, Cmd.none)
 
     InputTitleCase text ->
-      ({ model | text = text, conversion = (titlize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (titlize text) }, Cmd.none)
 
     InputSentenceCase text ->
-      ({ model | text = text, conversion = (sentencize text) }, Cmd.none)
-
-    CamelCase ->
       ({ model
-        | conversion = (camelize model.text), num = 2 }, Cmd.none)
-
-    HyphenCase ->
-      ({ model
-        | conversion = (dasherize model.text), num = 1 }, Cmd.none)
+        | text = text
+        , conversion = (sentencize text) }, Cmd.none)
 
     SnakeCase ->
       ({ model
-        | conversion = (snakerize model.text), num = 0 }, Cmd.none)
+        | conversion = (snakerize model.text)
+        , count = 0 }, Cmd.none)
+
+    HyphenCase ->
+      ({ model
+        | conversion = (hyphenize model.text)
+        , count = 1 }, Cmd.none)
+
+    CamelCase ->
+      ({ model
+        | conversion = (camelize model.text)
+        , count = 2 }, Cmd.none)
 
     TitleCase ->
       ({ model
-        | conversion = (titlize model.text), num = 3 }, Cmd.none)
+        | conversion = (titlize model.text)
+        , count = 3 }, Cmd.none)
 
     SentenceCase ->
       ({ model
-        | conversion = (sentencize model.text), num = 4 }, Cmd.none)
+        | conversion = (sentencize model.text)
+        , count = 4 }, Cmd.none)
 
 
 stringCases : List (String, Msg)
@@ -116,6 +137,7 @@ stringCases = [
   , ("Sentence", SentenceCase)
   ]
 
+
 inputStringCases : List (String -> Msg)
 inputStringCases = [
   InputSnakeCase
@@ -125,14 +147,15 @@ inputStringCases = [
   , InputSentenceCase
   ]
 
+
 renderButton : Int -> Int -> (String, Msg) -> Html Msg
-renderButton i num (str, msg) =
-  button [ classList[("button", True), ("active", i == num)], onClick msg ] [ text str ]
+renderButton i count (str, msg) =
+  button [ classList[("button", True), ("active", i == count)], onClick msg ] [ text str ]
 
 
 renderTextarea : Int -> Int -> String -> (String -> a) -> Html a
-renderTextarea i num text msg =
-  textarea [ classList[("input", True), ("visible", i == num)], value text, placeholder "Dare to covert a string...", onInput msg ] []
+renderTextarea i count text msg =
+  textarea [ classList[("input", True), ("visible", i == count)], value text, placeholder "Dare to covert a string...", onInput msg ] []
 
 
 view : Model -> Html Msg
@@ -142,7 +165,7 @@ view model =
       h1 [ class "title" ] [text "Elm Convert Case"]
     ]
     , div [ class "body" ] [
-        div [ class "row"] (List.indexedMap (\i val -> renderTextarea i model.num model.text val) inputStringCases)
+        div [ class "row"] (List.indexedMap (\i val -> renderTextarea i model.count model.text val) inputStringCases)
         , div [ classList [("row", True), ("hidden", model.conversion == "")]] [
           div [ class "result" ] [
             text model.conversion
@@ -154,7 +177,7 @@ view model =
           ]
         ]
       ]
-    , div [ class "menu" ] (List.indexedMap (\i val -> renderButton i model.num val) stringCases)
+    , div [ class "menu" ] (List.indexedMap (\i val -> renderButton i model.count val) stringCases)
   ]
 
 

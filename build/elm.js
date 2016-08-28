@@ -8266,7 +8266,7 @@ var _elm_lang$core$Regex$AtMost = function (a) {
 var _elm_lang$core$Regex$All = {ctor: 'All'};
 
 var _chrisbuttery$elm_convert_case$Main$renderTextarea = F4(
-	function (i, num, text, msg) {
+	function (i, count, text, msg) {
 		return A2(
 			_elm_lang$html$Html$textarea,
 			_elm_lang$core$Native_List.fromArray(
@@ -8278,7 +8278,7 @@ var _chrisbuttery$elm_convert_case$Main$renderTextarea = F4(
 							{
 							ctor: '_Tuple2',
 							_0: 'visible',
-							_1: _elm_lang$core$Native_Utils.eq(i, num)
+							_1: _elm_lang$core$Native_Utils.eq(i, count)
 						}
 						])),
 					_elm_lang$html$Html_Attributes$value(text),
@@ -8289,7 +8289,7 @@ var _chrisbuttery$elm_convert_case$Main$renderTextarea = F4(
 				[]));
 	});
 var _chrisbuttery$elm_convert_case$Main$renderButton = F3(
-	function (i, num, _p0) {
+	function (i, count, _p0) {
 		var _p1 = _p0;
 		return A2(
 			_elm_lang$html$Html$button,
@@ -8302,7 +8302,7 @@ var _chrisbuttery$elm_convert_case$Main$renderButton = F3(
 							{
 							ctor: '_Tuple2',
 							_0: 'active',
-							_1: _elm_lang$core$Native_Utils.eq(i, num)
+							_1: _elm_lang$core$Native_Utils.eq(i, count)
 						}
 						])),
 					_elm_lang$html$Html_Events$onClick(_p1._1)
@@ -8323,7 +8323,7 @@ var _chrisbuttery$elm_convert_case$Main$snakerize = function (str) {
 			},
 			str));
 };
-var _chrisbuttery$elm_convert_case$Main$dasherize = function (str) {
+var _chrisbuttery$elm_convert_case$Main$hyphenize = function (str) {
 	return _elm_lang$core$String$toLower(
 		A4(
 			_elm_lang$core$Regex$replace,
@@ -8400,7 +8400,7 @@ var _chrisbuttery$elm_convert_case$Main$update = F2(
 						model,
 						{
 							text: _p14,
-							conversion: _chrisbuttery$elm_convert_case$Main$dasherize(_p14)
+							conversion: _chrisbuttery$elm_convert_case$Main$hyphenize(_p14)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8440,14 +8440,14 @@ var _chrisbuttery$elm_convert_case$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'CamelCase':
+			case 'SnakeCase':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							conversion: _chrisbuttery$elm_convert_case$Main$camelize(model.text),
-							num: 2
+							conversion: _chrisbuttery$elm_convert_case$Main$snakerize(model.text),
+							count: 0
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8457,19 +8457,19 @@ var _chrisbuttery$elm_convert_case$Main$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							conversion: _chrisbuttery$elm_convert_case$Main$dasherize(model.text),
-							num: 1
+							conversion: _chrisbuttery$elm_convert_case$Main$hyphenize(model.text),
+							count: 1
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'SnakeCase':
+			case 'CamelCase':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							conversion: _chrisbuttery$elm_convert_case$Main$snakerize(model.text),
-							num: 0
+							conversion: _chrisbuttery$elm_convert_case$Main$camelize(model.text),
+							count: 2
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8480,7 +8480,7 @@ var _chrisbuttery$elm_convert_case$Main$update = F2(
 						model,
 						{
 							conversion: _chrisbuttery$elm_convert_case$Main$titlize(model.text),
-							num: 3
+							count: 3
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8491,13 +8491,13 @@ var _chrisbuttery$elm_convert_case$Main$update = F2(
 						model,
 						{
 							conversion: _chrisbuttery$elm_convert_case$Main$sentencize(model.text),
-							num: 4
+							count: 4
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
 	});
-var _chrisbuttery$elm_convert_case$Main$model = {text: '', conversion: '', num: 0};
+var _chrisbuttery$elm_convert_case$Main$model = {text: '', conversion: '', count: 0};
 var _chrisbuttery$elm_convert_case$Main$init = function (savedModel) {
 	return {
 		ctor: '_Tuple2',
@@ -8507,13 +8507,13 @@ var _chrisbuttery$elm_convert_case$Main$init = function (savedModel) {
 };
 var _chrisbuttery$elm_convert_case$Main$Model = F3(
 	function (a, b, c) {
-		return {text: a, conversion: b, num: c};
+		return {text: a, conversion: b, count: c};
 	});
 var _chrisbuttery$elm_convert_case$Main$SentenceCase = {ctor: 'SentenceCase'};
 var _chrisbuttery$elm_convert_case$Main$TitleCase = {ctor: 'TitleCase'};
 var _chrisbuttery$elm_convert_case$Main$CamelCase = {ctor: 'CamelCase'};
-var _chrisbuttery$elm_convert_case$Main$SnakeCase = {ctor: 'SnakeCase'};
 var _chrisbuttery$elm_convert_case$Main$HyphenCase = {ctor: 'HyphenCase'};
+var _chrisbuttery$elm_convert_case$Main$SnakeCase = {ctor: 'SnakeCase'};
 var _chrisbuttery$elm_convert_case$Main$stringCases = _elm_lang$core$Native_List.fromArray(
 	[
 		{ctor: '_Tuple2', _0: 'Snake', _1: _chrisbuttery$elm_convert_case$Main$SnakeCase},
@@ -8585,7 +8585,7 @@ var _chrisbuttery$elm_convert_case$Main$view = function (model) {
 							_elm_lang$core$List$indexedMap,
 							F2(
 								function (i, val) {
-									return A4(_chrisbuttery$elm_convert_case$Main$renderTextarea, i, model.num, model.text, val);
+									return A4(_chrisbuttery$elm_convert_case$Main$renderTextarea, i, model.count, model.text, val);
 								}),
 							_chrisbuttery$elm_convert_case$Main$inputStringCases)),
 						A2(
@@ -8637,7 +8637,7 @@ var _chrisbuttery$elm_convert_case$Main$view = function (model) {
 					_elm_lang$core$List$indexedMap,
 					F2(
 						function (i, val) {
-							return A3(_chrisbuttery$elm_convert_case$Main$renderButton, i, model.num, val);
+							return A3(_chrisbuttery$elm_convert_case$Main$renderButton, i, model.count, val);
 						}),
 					_chrisbuttery$elm_convert_case$Main$stringCases))
 			]));
@@ -8665,14 +8665,14 @@ var _chrisbuttery$elm_convert_case$Main$main = {
 					function (conversion) {
 						return A2(
 							_elm_lang$core$Json_Decode$andThen,
-							A2(_elm_lang$core$Json_Decode_ops[':='], 'num', _elm_lang$core$Json_Decode$int),
-							function (num) {
+							A2(_elm_lang$core$Json_Decode_ops[':='], 'count', _elm_lang$core$Json_Decode$int),
+							function (count) {
 								return A2(
 									_elm_lang$core$Json_Decode$andThen,
 									A2(_elm_lang$core$Json_Decode_ops[':='], 'text', _elm_lang$core$Json_Decode$string),
 									function (text) {
 										return _elm_lang$core$Json_Decode$succeed(
-											{conversion: conversion, num: num, text: text});
+											{conversion: conversion, count: count, text: text});
 									});
 							});
 					}))

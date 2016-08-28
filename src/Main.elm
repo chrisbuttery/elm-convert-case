@@ -47,8 +47,8 @@ camelize str =
     |> Regex.replace Regex.All (Regex.regex "\\s(\\w)") (\{match} -> String.toUpper (String.trimLeft match))
 
 
-dasherize : String -> String
-dasherize str =
+hyphenize : String -> String
+hyphenize str =
   str
     |> Regex.replace Regex.All (Regex.regex "\\s") (\_ -> "-")
     |> String.toLower
@@ -67,8 +67,8 @@ type Msg
   | InputCamelCase String
   | InputTitleCase String
   | InputSentenceCase String
-  | HyphenCase
   | SnakeCase
+  | HyphenCase
   | CamelCase
   | TitleCase
   | SentenceCase
@@ -78,39 +78,54 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
     InputSnakeCase text ->
-      ({ model | text = text, conversion = (snakerize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (snakerize text) }, Cmd.none)
 
     InputHyphenCase text ->
-      ({ model | text = text, conversion = (dasherize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (hyphenize text) }, Cmd.none)
 
     InputCamelCase text ->
-      ({ model | text = text, conversion = (camelize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (camelize text) }, Cmd.none)
 
     InputTitleCase text ->
-      ({ model | text = text, conversion = (titlize text) }, Cmd.none)
+      ({ model
+        | text = text
+        , conversion = (titlize text) }, Cmd.none)
 
     InputSentenceCase text ->
-      ({ model | text = text, conversion = (sentencize text) }, Cmd.none)
-
-    CamelCase ->
       ({ model
-        | conversion = (camelize model.text), count = 2 }, Cmd.none)
-
-    HyphenCase ->
-      ({ model
-        | conversion = (dasherize model.text), count = 1 }, Cmd.none)
+        | text = text
+        , conversion = (sentencize text) }, Cmd.none)
 
     SnakeCase ->
       ({ model
-        | conversion = (snakerize model.text), count = 0 }, Cmd.none)
+        | conversion = (snakerize model.text)
+        , count = 0 }, Cmd.none)
+
+    HyphenCase ->
+      ({ model
+        | conversion = (hyphenize model.text)
+        , count = 1 }, Cmd.none)
+
+    CamelCase ->
+      ({ model
+        | conversion = (camelize model.text)
+        , count = 2 }, Cmd.none)
 
     TitleCase ->
       ({ model
-        | conversion = (titlize model.text), count = 3 }, Cmd.none)
+        | conversion = (titlize model.text)
+        , count = 3 }, Cmd.none)
 
     SentenceCase ->
       ({ model
-        | conversion = (sentencize model.text), count = 4 }, Cmd.none)
+        | conversion = (sentencize model.text)
+        , count = 4 }, Cmd.none)
 
 
 stringCases : List (String, Msg)

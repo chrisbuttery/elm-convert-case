@@ -8497,6 +8497,58 @@ var _chrisbuttery$elm_convert_case$Main$update = F2(
 				};
 		}
 	});
+var _chrisbuttery$elm_convert_case$Main$countChar = function (str) {
+	return _elm_lang$core$String$length(
+		A4(
+			_elm_lang$core$Regex$replace,
+			_elm_lang$core$Regex$All,
+			_elm_lang$core$Regex$regex('\\s'),
+			function (_p18) {
+				return '';
+			},
+			str));
+};
+var _chrisbuttery$elm_convert_case$Main$countWord = function (str) {
+	return (_elm_lang$core$Native_Utils.eq(str, '') || _elm_lang$core$Native_Utils.eq(str, ' ')) ? 0 : _elm_lang$core$List$length(
+		A2(_elm_lang$core$String$split, ' ', str));
+};
+var _chrisbuttery$elm_convert_case$Main$renderCount = function (str) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('word-count')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$span,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'Word(s) ',
+							_elm_lang$core$Basics$toString(
+								_chrisbuttery$elm_convert_case$Main$countWord(str))))
+					])),
+				A2(
+				_elm_lang$html$Html$span,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'Char(s) ',
+							_elm_lang$core$Basics$toString(
+								_chrisbuttery$elm_convert_case$Main$countChar(str))))
+					]))
+			]));
+};
 var _chrisbuttery$elm_convert_case$Main$model = {text: '', conversion: '', count: 0};
 var _chrisbuttery$elm_convert_case$Main$init = function (savedModel) {
 	return {
@@ -8624,7 +8676,8 @@ var _chrisbuttery$elm_convert_case$Main$view = function (model) {
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[]))
-									]))
+									])),
+								_chrisbuttery$elm_convert_case$Main$renderCount(model.conversion)
 							]))
 					])),
 				A2(
@@ -8648,7 +8701,7 @@ var _chrisbuttery$elm_convert_case$Main$main = {
 			init: _chrisbuttery$elm_convert_case$Main$init,
 			view: _chrisbuttery$elm_convert_case$Main$view,
 			update: _chrisbuttery$elm_convert_case$Main$update,
-			subscriptions: function (_p18) {
+			subscriptions: function (_p19) {
 				return _elm_lang$core$Platform_Sub$none;
 			}
 		}),

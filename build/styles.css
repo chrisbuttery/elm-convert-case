@@ -223,3 +223,17 @@ body {
 .hidden {
   display: none;
 }
+
+.word-count {
+  color: rgba(0,0,0,0.4);
+  font-family: 'Geo', sans-serif;
+  margin-top: 20px;
+}
+
+.word-count span {
+  margin-left: 10px;
+}
+
+.word-count span:first-child {
+  margin-left: 0;
+}

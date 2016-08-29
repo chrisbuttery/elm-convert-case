@@ -27,6 +27,23 @@ model =
   }
 
 
+countWord : String -> Int
+countWord str =
+  if str == "" || str == " "
+  then 0
+  else
+    str
+      |> String.split " "
+      |> List.length
+
+
+countChar : String -> Int
+countChar str =
+  str
+    |> Regex.replace Regex.All (Regex.regex "\\s") (\_ -> "")
+    |> String.length
+
+
 titlize : String -> String
 titlize str =
   str
@@ -148,6 +165,14 @@ inputStringCases = [
   ]
 
 
+renderCount : String -> Html Msg
+renderCount str =
+  div [ class "word-count" ] [
+    span [] [ text ("Word(s) " ++ (toString (countWord str)))]
+    , span [] [ text ("Char(s) " ++ (toString (countChar str)))]
+  ]
+
+
 renderButton : Int -> Int -> (String, Msg) -> Html Msg
 renderButton i count (str, msg) =
   button [ classList[("button", True), ("active", i == count)], onClick msg ] [ text str ]
@@ -175,6 +200,7 @@ view model =
               , Html.Attributes.attribute "data-clipboard-text" model.conversion
             ] []
           ]
+          , renderCount model.conversion
         ]
       ]
     , div [ class "menu" ] (List.indexedMap (\i val -> renderButton i model.count val) stringCases)

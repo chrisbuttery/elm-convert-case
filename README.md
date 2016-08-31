@@ -16,8 +16,3 @@ make build
 
 npm run build
 ```
-### Todo
-
-* [x] Character count
-* [x] Word count
-* [ ] Style it properly
